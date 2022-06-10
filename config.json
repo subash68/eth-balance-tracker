@@ -1,8 +1,15 @@
 {
-    "webhookId": "984724153410142208",
-    "webhookToken": "-VnHDZV1T844KpZRaNhCROpO-mkWBFTKAes49SnPIhl112s4jub96H1jGG97_zLdnw7O",
+    "minimum": 5,
     "action": {
         "alert": "#ff3300",
         "info": "#0099ff"
+    },
+    "message": {
+        "alert": "Your current balance is ",
+        "info": "Your current balance is "
+    },
+    "content": {
+        "alert": "Minimum balance reached!",
+        "info": "Balance notification"
     }
 }

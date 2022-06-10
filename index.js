@@ -1,8 +1,7 @@
 const Web3 = require("web3");
 const CornJob = require('cron').CronJob;
-// const BalanceTrackerBot = require('./discordBot');
 const { MessageEmbed, WebhookClient } = require('discord.js');
-const { webhookId, webhookToken, action } = require('./config.json');
+const { action, minimum, message, content } = require('./config.json');
 
 require("dotenv").config();
 
@@ -10,13 +9,12 @@ class BalanceTrackerBot {
     webhookClient;
     constructor() {
         this.webhookClient = new WebhookClient({
-            id: webhookId, 
-            token: webhookToken 
+            id: process.env.DISCORD_HOOK_ID, 
+            token: process.env.DISCORD_HOOK_TOKEN
         });
     }
 
     createEmbed(message, type) {
-        console.log(action[type]);
         return new MessageEmbed()
             .setTitle(message)
             .setColor(action[type]);
@@ -25,7 +23,7 @@ class BalanceTrackerBot {
     postMessage(content, message, type) {
         this.webhookClient.send({
             content: content,
-            username: 'balance tracker',
+            username: process.env.BOT_NAME,
             avatarURL: 'https://i.imgur.com/AfFp7pu.png',
             embeds: [this.createEmbed(message, type)]
         })
@@ -61,6 +59,19 @@ class BalanceTracker {
     });
   }
 
+  // returns message and content
+  handleActionMessage(value) {
+    return (value < minimum) ? { 
+        message: message["alert"] + value, 
+        content: content["alert"],
+        type: action["alert"]
+    } : { 
+        message: message["info"] + value, 
+        content: content["info"],
+        type: action["info"]
+    }
+  }
+
   async watchBalance() {
       try {
           if(this.account != undefined && this.account != null) {
@@ -70,10 +81,11 @@ class BalanceTracker {
                     timestamp: new Date()
               };
 
+              let actionMessage = this.handleActionMessage(response.value);
               this.tracker.postMessage(
-                  (response.value < 5) ? 'value is less': 'Sufficient value',
-                  `Current Balance is ${response.value}`,
-                  (response.value < 5) ? 'alert': 'info',
+                  actionMessage.content,
+                  actionMessage.message,
+                  actionMessage.type
               );
           }
       } catch(err) {
@@ -96,13 +108,12 @@ class BalanceTracker {
                     timestamp: new Date(),
                 };
 
-                if(response.value < 5) {
-                    this.tracker.postMessage(
-                        'Balance is less than 5.', 
-                        `Current Balance is ${response.value}`, 
-                        'alert',
-                    );
-                }
+                let actionMessage = this.handleActionMessage(response.value);
+                this.tracker.postMessage(
+                    actionMessage.content,
+                    actionMessage.message,
+                    actionMessage.type
+                );
             }
           }
         } catch (err) {
@@ -120,7 +131,7 @@ let balanceTracker = new BalanceTracker(
 balanceTracker.subscribe("pendingTransactions");
 balanceTracker.watchTransactions();
 new CornJob(
-    '1 * * * * *',
+    '* 9 * * * *',
     () => {
         balanceTracker.watchBalance();
     }
