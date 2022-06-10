@@ -1,5 +1,5 @@
 const { MessageEmbed, WebhookClient } = require('discord.js');
-const { action, minimum, message, content } = require('./config.json');
+const { action } = require('./config.json');
 
 require("dotenv").config();
 
@@ -15,7 +15,7 @@ class BalanceTrackerBot {
     createEmbed(message, type) {
         return new MessageEmbed()
             .setTitle(message)
-            .setColor(action[type]);
+            .setColor(type);
     }
 
     postMessage(content, message, type) {

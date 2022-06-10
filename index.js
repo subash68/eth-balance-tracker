@@ -1,113 +1,42 @@
-const Web3 = require("web3");
-const CornJob = require('cron').CronJob;
-const { action, minimum, message, content } = require('./config.json');
-const { BalanceTrackerBot } = require('./discordBot');
+const express = require("express");
+const bodyParser = require("body-parser");
+const CornJob = require("cron").CronJob;
+const { BalanceTracker } = require("./balanceTracker");
+const { BalanceTrackerBot } = require("./discordBot");
 
-require("dotenv").config();
+const router = express.Router();
+const app = express();
 
-class BalanceTracker {
-    web3;
-    web3ws;
-    account;
-    subscription;
-    tracker;
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
 
-    constructor(account, tracker) {
-        this.web3ws = new Web3(
-            new Web3.providers.WebsocketProvider(
-                process.env.AVALANCHE_NODE_WSS
-            )
-        );
-        this.web3 = new Web3(
-            new Web3.providers.HttpProvider(
-            process.env.AVALANCHE_NODE_HTTPS
-            )
-        );
+router.post("/start", (request, response) => {
+    // Update configuration on the server and start listening
+    // TODO: provide accounts and minimum value from db.
 
-        this.account = account.toLowerCase();
-        this.tracker = tracker;
-    }
+    console.log(request.body);
 
-    subscribe(topic) {
-        this.subscription = this.web3ws.eth.subscribe(topic, (err, res) => {
-            if (err) console.error(err);
-        });
-    }
+    let balanceTracker = new BalanceTracker(
+        request.body.addresses,
+        request.body.minimum,
+        new BalanceTrackerBot()
+    );
+    balanceTracker.subscribe("pendingTransactions");
+    balanceTracker.watchTransactions();
 
-    // returns message and content
-    handleActionMessage(value) {
-        return (value < minimum) ? { 
-            message: message["alert"] + value, 
-            content: content["alert"],
-            type: action["alert"]
-        } : { 
-            message: message["info"] + value, 
-            content: content["info"],
-            type: action["info"]
-        }
-    }
+    // TODO: convert frequency into cron job
+    // new CornJob(
+    //     '1 * * * * *', // Everyday at 9:00 am
+    //     () => {
+    //         balanceTracker.watchBalances();
+    //     }
+    // ).start();
 
-    async watchBalance() {
-        try {
-            if(this.account != undefined && this.account != null) {
-                let response = {
-                    value: this.web3.utils.fromWei(
-                        await this.web3.eth.getBalance(this.account), "ether"),
-                    timestamp: new Date()
-                };
+    response.json({});
+})
 
-                let actionMessage = this.handleActionMessage(response.value);
-                this.tracker.postMessage(
-                    actionMessage.content,
-                    actionMessage.message,
-                    actionMessage.type
-                );
-            }
-        } catch(err) {
-            console.log(err);
-        }
-    }
+app.use("/", router);
+app.listen(3000, () => {
+    console.log("Server running on PORT 3000");
+});
 
-    watchTransactions() {
-        // console.log("Watching all pending transactions...");
-        this.subscription.on("data", (txHash) => {
-            setTimeout(async () => {
-            try {
-                let tx = await this.web3.eth.getTransaction(txHash);
-                if (tx != null) {
-                if (this.account == tx.from.toLowerCase()) {
-                    let response = {
-                        address: tx.from,
-                        value: this.web3.utils.fromWei(
-                            await this.web3.eth.getBalance(this.account), "ether"),
-                        timestamp: new Date(),
-                    };
-
-                    let actionMessage = this.handleActionMessage(response.value);
-                    this.tracker.postMessage(
-                        actionMessage.content,
-                        actionMessage.message,
-                        actionMessage.type
-                    );
-                }
-                }
-            } catch (err) {
-                console.error(err);
-            }
-            }, 5000);
-        });
-    }
-}
-
-let balanceTracker = new BalanceTracker(
-    process.env.ACCOUNT,
-    new BalanceTrackerBot()
-);
-balanceTracker.subscribe("pendingTransactions");
-balanceTracker.watchTransactions();
-new CornJob(
-    '1 * * * * *',
-    () => {
-        balanceTracker.watchBalance();
-    }
-).start();

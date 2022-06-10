@@ -1,12 +1,11 @@
 {
-    "minimum": 5,
     "action": {
         "alert": "#ff3300",
-        "info": "#0099ff"
+        "info": "#00cc00"
     },
     "message": {
-        "alert": "Your current balance is ",
-        "info": "Your current balance is "
+        "alert": " balance is ",
+        "info": " balance is "
     },
     "content": {
         "alert": "Minimum balance reached!",
