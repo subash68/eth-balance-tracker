@@ -1,6 +1,7 @@
 const { MessageEmbed, WebhookClient } = require('discord.js');
-const { webhookId, webhookToken, action } = require('./config.json');
+const { action, minimum, message, content } = require('./config.json');
 
+require("dotenv").config();
 
 class BalanceTrackerBot {
     webhookClient;
@@ -12,7 +13,6 @@ class BalanceTrackerBot {
     }
 
     createEmbed(message, type) {
-        console.log(action[type]);
         return new MessageEmbed()
             .setTitle(message)
             .setColor(action[type]);
@@ -21,9 +21,11 @@ class BalanceTrackerBot {
     postMessage(content, message, type) {
         this.webhookClient.send({
             content: content,
-            username: 'balance tracker',
+            username: process.env.BOT_NAME,
             avatarURL: 'https://i.imgur.com/AfFp7pu.png',
             embeds: [this.createEmbed(message, type)]
         })
     }
 }
+
+module.exports = { BalanceTrackerBot: BalanceTrackerBot }
