@@ -3,8 +3,8 @@
 This simple utility tracks account ETH balance and notifies channel in Discord using a discord bot. This utility can track multiple addresses at once.
 
 General workflow of various components are listed 
+![eith-balance-tracker](https://user-images.githubusercontent.com/3907463/173186367-210e26dd-b2ed-43e7-af62-a1f67c6cf562.png)
 
-![eith-balance-tracker](https://user-images.githubusercontent.com/3907463/173186283-281d12ba-b684-4a58-8deb-c182b4d346f1.png)
 
 ## API handler
 
@@ -72,7 +72,7 @@ We are tracking addresses from Avalanche blockchain, for which we are using spee
 ## Deployment strategy
 
 Deployement strategy for this deamon with multiple endpoint configuation for messaging services can be hosted in AWS. General architecture for deployement 
-![eth-balance-tracker-deployment](https://user-images.githubusercontent.com/3907463/173186299-e729c929-919d-4f44-957b-7360e301965f.png)
+![eth-balance-tracker-deployment](https://user-images.githubusercontent.com/3907463/173186377-2294a3e1-30cb-4e52-afe3-eeb8861bbb2f.png)
 
 Room For improvements:
 
