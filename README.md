@@ -1,14 +1,12 @@
-eth tracker utility
+# eth tracker utility
 
-This simple utility tracks account ETH balance and notifies channel in Discord using a discord bot.
-
-This utility can handle multiple addresses at once.
+This simple utility tracks account ETH balance and notifies channel in Discord using a discord bot. This utility can track multiple addresses at once.
 
 General workflow of various components are listed 
+
 ![here](https://user-images.githubusercontent.com/3907463/173174004-8ee6b255-8acd-4208-9e29-756c65ab78c4.png)
 
-
-### API handler
+## API handler
 User/Admin can start the deamon using API endpoint with required input data.
 
 ```
@@ -39,3 +37,23 @@ Tracker connects to node provider and watches for any **outgoing transactions** 
 Bot handler will broadcast messages to selected channel in the server. sample discord messages would look like
 
 ![Screen Shot 2022-06-11 at 11 04 02](https://user-images.githubusercontent.com/3907463/173174390-f8c45c08-d307-4dc5-806f-9902d5c75986.png)
+
+> If account maintains sufficient balance then its tagged with green color else tagged with red color.
+
+## Cron job handler
+
+A corn job handler is provided to track balance of all addresses at a specific time or at specific intervals. User input is collected as simple time input and converted into cron time format. In our case, we are tracking all the addresses **At 09:00** everyday.
+
+```
+    0 0 9 * * *
+```
+
+> cron time conversion utility is currently under development. Will update this repo lately.
+
+## Blockchain nodes
+
+We are tracking addresses from Avalanche blockchain, for which we are using speedy nodes provided by **moralis** to connect with our blockchain network. 
+
+> Node configurations are maintained in .env file. 
+> .env.example file is provided for bringing up this service with ease.
+
