@@ -81,3 +81,16 @@ Room For improvements:
 
 1. we could have multiple tracker instances to handle multiple configurations with broadcast endpoints.
 2. Configuraitons for multiple endpoints and adding multiple endpoints to deamon.
+
+
+Reference for service and datastore:
+
+![Screen Shot 2022-06-11 at 17 24 45](https://user-images.githubusercontent.com/3907463/173186867-772b0267-1299-45f9-818a-0accb390276b.png)
+
+![Screen Shot 2022-06-11 at 17 24 52](https://user-images.githubusercontent.com/3907463/173186875-e5954ff5-5bc8-4a01-a0b2-d774d0999917.png)
+
+Mongodb document
+
+![Screen Shot 2022-06-11 at 17 24 29](https://user-images.githubusercontent.com/3907463/173186920-ea75805c-f9c8-4b6a-85c2-06c492820b5d.png)
+
+
