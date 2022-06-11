@@ -1,5 +1,5 @@
 const Web3 = require("web3");
-const { action, message, content } = require('./config.json');
+const { action, message, content } = require('../../config.json');
 
 require("dotenv").config();
 

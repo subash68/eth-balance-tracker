@@ -1,5 +1,5 @@
 const { MessageEmbed, WebhookClient } = require('discord.js');
-const { action } = require('./config.json');
+const { action } = require('../../config.json');
 
 require("dotenv").config();
 

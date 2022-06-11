@@ -5,16 +5,21 @@
   "main": "index.js",
   "scripts": {
     "start": "set NODE_ENV=dev && nodemon index.js",
+    "dev": "cross-env NODE_ENV=development nodemon src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "cron": "^2.0.0",
+    "cross-env": "^7.0.3",
     "discord.js": "^13.8.0",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
+    "joi": "^17.6.0",
+    "mongoose": "^6.3.6",
     "nodemon": "^2.0.16",
-    "web3": "^1.7.3"
+    "web3": "^1.7.3",
+    "winston": "^3.7.2"
   }
 }
