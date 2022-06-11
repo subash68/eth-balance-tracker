@@ -1,0 +1,1 @@
+module.exports.trackController = require('./track.controller');
