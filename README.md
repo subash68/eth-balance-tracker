@@ -69,6 +69,11 @@ We are tracking addresses from Avalanche blockchain, for which we are using spee
 > Node configurations are maintained in .env file. 
 > .env.example file is provided for bringing up this service with ease.
 
+## Deployment strategy
+
+Deployement strategy for this deamon with multiple endpoint configuation for messaging services can be hosted in AWS. General architecture for deployement 
+![eth-balance-tracker-deployment](https://user-images.githubusercontent.com/3907463/173186200-829dbe7e-8e95-4fc7-9aff-134317771645.png)
+
 Room For improvements:
 
 1. we could have multiple tracker instances to handle multiple configurations with broadcast endpoints.
