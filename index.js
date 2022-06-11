@@ -14,8 +14,6 @@ router.post("/start", (request, response) => {
     // Update configuration on the server and start listening
     // TODO: provide accounts and minimum value from db.
 
-    console.log(request.body);
-
     let balanceTracker = new BalanceTracker(
         request.body.addresses,
         request.body.minimum,
@@ -25,12 +23,12 @@ router.post("/start", (request, response) => {
     balanceTracker.watchTransactions();
 
     // TODO: convert frequency into cron job
-    // new CornJob(
-    //     '1 * * * * *', // Everyday at 9:00 am
-    //     () => {
-    //         balanceTracker.watchBalances();
-    //     }
-    // ).start();
+    new CornJob(
+        '0 0 9 * * *', // Everyday at 9:00 am
+        () => {
+            balanceTracker.watchBalances();
+        }
+    ).start();
 
     response.json({});
 })

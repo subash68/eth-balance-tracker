@@ -22,7 +22,7 @@ class BalanceTrackerBot {
         this.webhookClient.send({
             content: content,
             username: process.env.BOT_NAME,
-            avatarURL: 'https://i.imgur.com/AfFp7pu.png',
+            avatarURL: process.env.DISCORD_BOT_AVATAR,
             embeds: [this.createEmbed(message, type)]
         })
     }

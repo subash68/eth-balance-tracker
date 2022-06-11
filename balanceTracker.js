@@ -24,10 +24,6 @@ class BalanceTracker {
             process.env.AVALANCHE_NODE_HTTPS
             )
         );
-
-        // Read from db and update variables here
-
-        // this.account = account.toLowerCase();
         this.accounts = accounts.map((account) => { return account.toLowerCase() });
         this.minimum = minimum;
         this.tracker = tracker;
@@ -41,8 +37,6 @@ class BalanceTracker {
 
     // returns message and content
     handleActionMessage(account, value) {
-        //TODO: Read minimum from database
-
         return (value < this.minimum) ? {
 
             message: account + message["alert"] + parseFloat(value).toFixed(4),
