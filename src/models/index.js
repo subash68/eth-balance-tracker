@@ -1,1 +1,1 @@
-module.exports = require('./track.model');
+module.exports.Tracker = require('./track.model');
