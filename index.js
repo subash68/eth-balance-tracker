@@ -10,6 +10,11 @@ const app = express();
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
+router.post("/conf", (request, response) => {
+    // update configuration in database
+    
+});
+
 router.post("/start", (request, response) => {
     // Update configuration on the server and start listening
     // TODO: provide accounts and minimum value from db.
