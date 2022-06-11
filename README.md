@@ -7,13 +7,25 @@ General workflow of various components are listed
 ![here](https://user-images.githubusercontent.com/3907463/173174004-8ee6b255-8acd-4208-9e29-756c65ab78c4.png)
 
 ## API handler
-User/Admin can start the deamon using API endpoint with required input data.
+
+User/Admin can use this REST API to update configuration for the deamon running. User/Admin can start the deamon using API endpoint with required input data.
+
+To start the daemon:
+```
+    {schema}:{host}:{port}/v1/track/start
+
+    {
+        "name": "default"
+    }
+```
+> for default configuration
+
+To update configuration into persistent storage (mongodb).
+
 
 ```
-    {scheme}:{host}:{port}/start
-```
+    {schema}:{host}:{port}/v1/track/start
 
-```
     {
         "addresses": [
                 "0x4db8bcCF4385C7AA46F48eb42f70FA41Df917b44",
@@ -57,3 +69,7 @@ We are tracking addresses from Avalanche blockchain, for which we are using spee
 > Node configurations are maintained in .env file. 
 > .env.example file is provided for bringing up this service with ease.
 
+Room For improvements:
+
+1. we could have multiple tracker instances to handle multiple configurations with broadcast endpoints.
+2. Configuraitons for multiple endpoints and adding multiple endpoints to deamon.
