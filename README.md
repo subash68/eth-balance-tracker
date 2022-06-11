@@ -38,3 +38,4 @@ Tracker connects to node provider and watches for any **outgoing transactions** 
 
 Bot handler will broadcast messages to selected channel in the server. sample discord messages would look like
 
+![Screen Shot 2022-06-11 at 11 04 02](https://user-images.githubusercontent.com/3907463/173174390-f8c45c08-d307-4dc5-806f-9902d5c75986.png)
