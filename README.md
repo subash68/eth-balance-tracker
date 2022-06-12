@@ -72,10 +72,10 @@ We are tracking addresses from Avalanche blockchain, for which we are using spee
 
 ## Deployment strategy
 
-Deployement strategy for this deamon with multiple endpoint configuation for messaging services can be hosted in AWS. General architecture for deployement 
+Deployement strategy for this deamon with multiple endpoint configuation for messaging services can be hosted with GCP. General architecture for deployement 
 
+![eth-balance-tracker_gcp](https://user-images.githubusercontent.com/3907463/173219718-e12b9108-0abc-4a6f-aa52-84c3b9239897.png)
 
-![eth-balance-tracker-deployment](https://user-images.githubusercontent.com/3907463/173186377-2294a3e1-30cb-4e52-afe3-eeb8861bbb2f.png)
 
 Room For improvements:
 
